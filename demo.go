@@ -62,5 +62,14 @@ func (a *Demo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		req.Header.Set(key, writer.String())
 	}
 
+	for i, link := range a.config.Links {
+        rw.Header().Add(
+            fmt.Sprintf("X-Link-%d", i),
+            fmt.Sprintf("%s|%s", link.Title, link.URL),
+        )
+    }
+
 	a.next.ServeHTTP(rw, req)
 }
+
+ 
